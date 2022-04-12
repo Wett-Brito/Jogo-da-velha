@@ -543,6 +543,11 @@ public class Bot {
 		int x1 = 0;
 		int x2 = 0;
 		int x3 = 0;
+		boolean a1 = false;
+		boolean a3 = false;
+		boolean c1 = false;
+		boolean c3 = false;
+		boolean center = false;
 		
 		int bot_a = 0;
 		int bot_b = 0;
@@ -550,7 +555,12 @@ public class Bot {
 		int bot_x1 = 0;
 		int bot_x2 = 0;
 		int bot_x3 = 0;
-
+		boolean bot_a1 = false;
+		boolean bot_a3 = false;
+		boolean bot_c1 = false;
+		boolean bot_c3 = false;
+		boolean bot_center = false;
+		
 		for (int i = 0; i < bot.getPosicoesJogadas().size(); i++) {
 			
 			if ((bot.getPosicoesJogadas().get(i)).substring(0, 1).equals("a")) {
@@ -575,6 +585,26 @@ public class Bot {
 
 			if ((bot.getPosicoesJogadas().get(i)).substring(1, 2).equals("3")) {
 				bot_x3++;
+			}
+			
+			if(bot.getPosicoesJogadas().get(i).equals("a1")) {
+				a1 = true;
+			}
+			
+			if(bot.getPosicoesJogadas().get(i).equals("a3")) {
+				a3 = true;
+			}
+			
+			if(bot.getPosicoesJogadas().get(i).equals("c1")) {
+				c1 = true;
+			}
+			
+			if(bot.getPosicoesJogadas().get(i).equals("c3")) {
+				c3 = true;
+			}
+			
+			if(bot.getPosicoesJogadas().get(i).equals("b2")) {
+				center = true;
 			}
 
 		}
@@ -604,7 +634,47 @@ public class Bot {
 			if ((j1.getPosicoesJogadas().get(i)).substring(1, 2).equals("3")) {
 				x3++;
 			}
+			
+			if(j1.getPosicoesJogadas().get(i).equals("a1")) {
+				bot_a1 = true;
+			}
+			
+			if(j1.getPosicoesJogadas().get(i).equals("a3")) {
+				bot_a3 = true;
+			}
+			
+			if(j1.getPosicoesJogadas().get(i).equals("c1")) {
+				bot_c1 = true;
+			}
+			
+			if(j1.getPosicoesJogadas().get(i).equals("c3")) {
+				bot_c3 = true;
+			}
+			
+			if(j1.getPosicoesJogadas().get(i).equals("b2")) {
+				bot_center = true;
+			}
 
+		}
+		
+		if(bot_a1 == true && bot_center == true && listaPosicoesValidas.contains("c3")) {
+			return "c3";
+		}
+		
+		if(bot_a3 == true && bot_center == true && listaPosicoesValidas.contains("c1")) {
+			return "c1";
+		}
+		
+		if(bot_c1 == true && bot_center == true && listaPosicoesValidas.contains("a3")) {
+			return "a3";
+		}
+		
+		if(bot_c3 == true && bot_center == true && listaPosicoesValidas.contains("a1")) {
+			return "a1";
+		}
+		
+		if((bot_c1 == true && bot_a3 == true) || (bot_c3 == true && bot_a1 == true) && listaPosicoesValidas.contains("b2")) {
+			return "b2";
 		}
 		
 		if(bot_a >= 2) {
@@ -643,6 +713,26 @@ public class Bot {
 					return s;
 				}
 			}	
+		}
+		
+		if(a1 == true && center == true && listaPosicoesValidas.contains("c3")) {
+			return "c3";
+		}
+		
+		if(a3 == true && center == true && listaPosicoesValidas.contains("c1")) {
+			return "c1";
+		}
+		
+		if(c1 == true && center == true && listaPosicoesValidas.contains("a3")) {
+			return "a3";
+		}
+		
+		if(c3 == true && center == true && listaPosicoesValidas.contains("a1")) {
+			return "a1";
+		}
+		
+		if((c1 == true && a3 == true) || (c3 == true && a1 == true) && listaPosicoesValidas.contains("b2")) {
+			return "b2";
 		}
 		
 		if(a >= 2) {

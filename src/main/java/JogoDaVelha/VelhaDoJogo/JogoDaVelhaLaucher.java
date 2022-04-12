@@ -3,17 +3,17 @@ package JogoDaVelha.VelhaDoJogo;
 import java.io.IOException;
 import java.util.Scanner;
 
+import JogoDaVelha.Controllers.ExceptionsControl;
+import JogoDaVelha.Controllers.MotorDoJogo;
 import JogoDaVelha.Regras.Bot;
 import JogoDaVelha.Regras.Jogador;
-import JogoDaVelha.Regras.Regras;
 import JogoDaVelha.Tabuleiro.Tabuleiro;
-import JogoDaVelha.Texto.Texto;
 
 public class JogoDaVelhaLaucher {
 
 	public static void main(String[] args) throws InterruptedException, IOException {
 		
-		Texto.limparPagina();
+		MotorDoJogo.limparPagina();
 
 		
 		boolean fimJogo = false;
@@ -21,26 +21,37 @@ public class JogoDaVelhaLaucher {
 		
 		System.out.print("Bem vindo, qual é o nome do jogador: ");
 		String nomeJogador = sc.nextLine();
-		Texto.limparPagina();
+		MotorDoJogo.limparPagina();
 		
 		System.out.print("Ola " + nomeJogador + ". Gostaria de jogar primeiro S/N: ");
 		boolean jogarPrimeiro;
 		
-		if(sc.nextLine().toLowerCase().trim().equals("s")) {
+		String respostaJogarPrimeiro = sc.nextLine();
+		
+		while(!ExceptionsControl.verificarSimOuNao(respostaJogarPrimeiro)) {
+			respostaJogarPrimeiro = sc.nextLine();
+		}
+		
+		if(respostaJogarPrimeiro.toLowerCase().trim().equals("s")) {
 			jogarPrimeiro = true;
 		} else {
 			jogarPrimeiro = false;
 		}
-		Texto.limparPagina();
+		MotorDoJogo.limparPagina();
 
-		System.out.println("Escolhar por favor o nivel de dificuldade: ");
+		System.out.println("Escolhar por favor o nivel de dificuldade ");
 		System.out.println("1) Completamente burro");
 		System.out.println("2) Menos burro");
 		System.out.println("3) Começando a pensar");
 		System.out.println("4) Pele da velha");
+		System.out.print("Escolha um numero entre as opcoes: ");
 		String dificuldade = sc.nextLine();
 		
-		Texto.limparPagina();
+		while(!ExceptionsControl.verificarDificuldade(dificuldade)) {
+			dificuldade = sc.nextLine();
+		}
+		
+		MotorDoJogo.limparPagina();
 		
 		Jogador j1 = new Jogador(nomeJogador, jogarPrimeiro);
 		Jogador j2 = new Jogador("Gary", !jogarPrimeiro);
@@ -52,9 +63,9 @@ public class JogoDaVelhaLaucher {
 			if(!j1.isComecouPrimeiro()) {
 				
 				if(Integer.valueOf(dificuldade) < 2) {
-					Regras.RealizarJogada(Bot.gerarJogadaAleatoria(Tabuleiro.listaPosicoesValidas()), j2);
+					MotorDoJogo.RealizarJogada(Bot.gerarJogadaAleatoria(Tabuleiro.listaPosicoesValidas()), j2);
 				} else {
-					Regras.RealizarJogada(Bot.realizarJogadaCentro(), j2);
+					MotorDoJogo.RealizarJogada(Bot.realizarJogadaCentro(), j2);
 					
 				}
 				
@@ -64,20 +75,29 @@ public class JogoDaVelhaLaucher {
 			if(j1.isComecouPrimeiro()) {
 				Tabuleiro.mostrarTabuleiroEmBranco();
 			}
-			while(!Regras.isPartidaFinalizada()) {
 			
-				System.out.println("Qual sera a sua jogada? Exemplos a1 ou b3");			
+			while(!MotorDoJogo.isPartidaFinalizada()) {
+			
+				System.out.println("Qual sera a sua jogada? Exemplos a1 ou b3");
+				System.out.print("Posição: ");
 				String posicao = sc.nextLine();
-				Texto.limparPagina();
 				
-				while(Regras.verificarSeJogadaPermitida(posicao)) {
-					System.out.println("Posição invalida, pois ja foi jogada, favor digitar outra jogada: ");
+				while(!ExceptionsControl.VerificarPosicaoDigitada(posicao)) {
 					posicao = sc.nextLine();
 				}
 				
-				Regras.RealizarJogada(posicao, j1);
+				MotorDoJogo.limparPagina();
+				
+				while(MotorDoJogo.verificarSeJogadaPermitida(posicao)) {
+					System.out.println(Tabuleiro.mostarTabuleiroPreenchido());
+					System.out.print("Posição invalida, pois ja foi jogada, favor digitar outra jogada: ");
+					posicao = sc.nextLine();
+					MotorDoJogo.limparPagina();
+				}
+				
+				MotorDoJogo.RealizarJogada(posicao, j1);
 								
-				if(Regras.isPartidaFinalizada() == true) {
+				if(MotorDoJogo.isPartidaFinalizada() == true) {
 					break;
 				}
 				
@@ -96,37 +116,50 @@ public class JogoDaVelhaLaucher {
 
 				}
 				
-					while(Regras.verificarSeJogadaPermitida(jogadaBot)) {
+					while(MotorDoJogo.verificarSeJogadaPermitida(jogadaBot)) {
 					jogadaBot = Bot.gerarJogadaAleatoria(Tabuleiro.listaPosicoesValidas());
 				}
 				
-				Regras.RealizarJogada(jogadaBot, j2);
+				MotorDoJogo.RealizarJogada(jogadaBot, j2);
 				
 				
 				System.out.println(Tabuleiro.mostarTabuleiroPreenchido());
 
 			}
 			
-			System.out.println("Gostaria de continuar jogando? S/N");
-			if(sc.nextLine().toLowerCase().trim().equals("n")) {
-				fimJogo = true;
-				Texto.limparPagina();
-			} else {
-				Regras.reiniciarPartida();
-				System.out.println("Gostaria de jogar primeiro? S/N");
-				
-				if(sc.nextLine().toLowerCase().trim().equals("s")) {
-					jogarPrimeiro = true;
-				} else {
-					jogarPrimeiro = false;
-				}
-				Texto.limparPagina();
-				j1 = new Jogador(nomeJogador, jogarPrimeiro);
-				j2 = new Jogador("Gary", !jogarPrimeiro);
-				
+			System.out.print("Gostaria de continuar jogando? S/N: ");
+			String respostaContinuar = sc.nextLine();
+			while(!ExceptionsControl.verificarSimOuNao(respostaContinuar)) {
+				respostaContinuar = sc.nextLine();
 			}
+				if(respostaContinuar.toLowerCase().trim().equals("n")) {
+					fimJogo = true;
+					MotorDoJogo.limparPagina();
+					
+				} else {
+					MotorDoJogo.reiniciarPartida();
+					System.out.print("Gostaria de jogar primeiro? S/N: ");
+					
+					String respostaJogarPrimeiro2 = sc.nextLine();
+					
+					while(!ExceptionsControl.verificarSimOuNao(respostaJogarPrimeiro2)) {
+						respostaJogarPrimeiro2 = sc.nextLine();
+						
+					}
+					
+					if(respostaJogarPrimeiro2.toLowerCase().trim().equals("s")) {
+						jogarPrimeiro = true;
+					} else {
+						jogarPrimeiro = false;
+					}
+					
+					MotorDoJogo.limparPagina();
+					
+					j1 = new Jogador(nomeJogador, jogarPrimeiro);
+					j2 = new Jogador("Gary", !jogarPrimeiro);
+					
+				}
 		}
-		
 		
 		sc.close();
 		

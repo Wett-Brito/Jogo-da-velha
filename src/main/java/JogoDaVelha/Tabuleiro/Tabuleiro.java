@@ -51,7 +51,7 @@ public class Tabuleiro {
 	
 	public static String adicionarMarcacaoTabuleiro(Jogador jogador, String posicao) {
 	
-		return "3  " + (posicao.equals("a3") ? a3 = jogador.simbolo() : " ") +  "  │ " + (posicao.equals("b3") ? b3 = jogador.simbolo() : " ") + "  │ " + (posicao.equals("c3") ? c3 = jogador.simbolo() : " ") + "  " + "\n"
+		return     "3  " + (posicao.equals("a3") ? a3 = jogador.simbolo() : " ") +  "  │ " + (posicao.equals("b3") ? b3 = jogador.simbolo() : " ") + "  │ " + (posicao.equals("c3") ? c3 = jogador.simbolo() : " ") + "  " + "\n"
 				 + "  ――――│――――│――――" + "\n"
 				 + "2  " + (posicao.equals("a2") ? a2 = jogador.simbolo() : " ") +  "  │ " + (posicao.equals("b2") ? b2 = jogador.simbolo() : " ") + "  │ " + (posicao.equals("c2") ? c2 = jogador.simbolo() : " ") + "  " + "\n"
 				 + "  ――――│――――│――――" + "\n"

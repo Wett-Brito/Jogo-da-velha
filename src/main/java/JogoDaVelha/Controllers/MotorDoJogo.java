@@ -1,9 +1,9 @@
-package JogoDaVelha.Regras;
+package JogoDaVelha.Controllers;
 
+import JogoDaVelha.Regras.Jogador;
 import JogoDaVelha.Tabuleiro.Tabuleiro;
-import JogoDaVelha.Texto.Texto;
 
-public class Regras {
+public class MotorDoJogo {
 
 	private static boolean partidaFinalizada = false;
 	
@@ -33,7 +33,7 @@ public class Regras {
 	public static boolean verificaVelha() {
 		if(partidaFinalizada == false && Tabuleiro.listaPosicoesValidas().isEmpty()) {
 			
-			Texto.limparPagina();
+			MotorDoJogo.limparPagina();
 			System.out.println(Tabuleiro.mostarTabuleiroPreenchido());
 			System.out.println("Fim da partida...");
 			System.out.println("Partida terminou em velha :(");
@@ -46,7 +46,7 @@ public class Regras {
 	
 	public static void fimDaPartida(Jogador jogador) {
 		
-		Texto.limparPagina();
+		MotorDoJogo.limparPagina();
 		System.out.println(Tabuleiro.mostarTabuleiroPreenchido());
 		System.out.println("Fim da partida...");
 		System.out.println("Vitoria do jogador " + jogador.getNome() + "!!!!");
@@ -130,6 +130,13 @@ public class Regras {
 		if(((a1_for && c3_for) || (a3_for && c1_for)) && center) {
 			fimDaPartida(jogador);
 		}
+	}
+	
+	public static void limparPagina() {
+		for (int i = 0; i < 20; i++) {
+			System.out.println();
+		}
+		
 	}
 	
 	public static void reiniciarPartida() {
