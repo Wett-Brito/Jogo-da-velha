@@ -7,10 +7,21 @@ import java.util.Random;
 public class Bot {
 
 	private static Random rand = new Random();
-
+	
 	public static String gerarJogadaAleatoria(List<String> listaPosicoesValidas) {
 
-		return listaPosicoesValidas.get(rand.nextInt(listaPosicoesValidas.size()));
+		List<String> melhoresPosicoes = new ArrayList<>();
+		
+		for (String s : listaPosicoesValidas) {
+			if(s.equals("a1") || s.equals("a3") || s.equals("c1") || s.equals("c3") ) {
+				melhoresPosicoes.add(s);
+			}
+		}
+		if(!melhoresPosicoes.isEmpty()) {
+			return melhoresPosicoes.get(rand.nextInt(melhoresPosicoes.size()));			
+		} else {
+			return listaPosicoesValidas.get(rand.nextInt(listaPosicoesValidas.size()));
+		}
 	}
 
 	public static String realizarJogadaCentro() {
@@ -192,7 +203,11 @@ public class Bot {
 			}
 			return posicao;
 
-		} else if ((b >= a && b >= c && b >= x1 && b >= x2 && b >= x3) && bExist) {
+		} else if (a == 0 && b == 0 && c == 0 && x1 == 0 && x2 == 0 && x3 == 0) {
+			return gerarJogadaAleatoria(listaPosicoesValidas);
+		}
+		
+		else if ((b >= a && b >= c && b >= x1 && b >= x2 && b >= x3) && bExist) {
 
 			List<String> posicoesDisponiveis = new ArrayList<>();
 
@@ -741,31 +756,41 @@ public class Bot {
 					return s;
 				}
 			}	
-		} else if(b >= 2) {
+		}  
+		
+		if(b >= 2) {
 			for (String s : listaPosicoesValidas) {
 				if(s.substring(0, 1).equals("b")) {
 					return s;
 				}
 			}	
-		} else if(c >= 2) {
+		}
+		
+		if(c >= 2) {
 			for (String s : listaPosicoesValidas) {
 				if(s.substring(0, 1).equals("c")) {
 					return s;
 				}
 			}	
-		} else if(x1 >= 2) {
+		}
+		
+		if(x1 >= 2) {
 			for (String s : listaPosicoesValidas) {
 				if(s.substring(1, 2).equals("1")) {
 					return s;
 				}
 			}	
-		} else if(x2 >= 2) {
+		} 
+		
+		if(x2 >= 2) {
 			for (String s : listaPosicoesValidas) {
 				if(s.substring(1, 2).equals("2")) {
 					return s;
 				}
 			}	
-		} else if(x3 >= 2) {
+		}
+		
+		if(x3 >= 2) {
 			for (String s : listaPosicoesValidas) {
 				if(s.substring(1, 2).equals("3")) {
 					return s;

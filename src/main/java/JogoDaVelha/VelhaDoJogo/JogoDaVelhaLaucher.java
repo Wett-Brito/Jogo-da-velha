@@ -43,7 +43,7 @@ public class JogoDaVelhaLaucher {
 		System.out.println("1) Completamente burro");
 		System.out.println("2) Menos burro");
 		System.out.println("3) Começando a pensar");
-		System.out.println("4) Pele da velha");
+		System.out.println("4) Pelé da velha");
 		System.out.print("Escolha um numero entre as opcoes: ");
 		String dificuldade = sc.nextLine();
 		
@@ -85,7 +85,11 @@ public class JogoDaVelhaLaucher {
 				while(!ExceptionsControl.VerificarPosicaoDigitada(posicao)) {
 					posicao = sc.nextLine();
 				}
-				
+/*
+*		COMENTAR O sc.nextLine E O while ACIMA E DESCOMENTAR A LINHA DE BAIXO, PARA FAZER UM BOT IA X BOT IA
+*/
+//				String posicao = Bot.realizarJogadaPensadaNivel4(Tabuleiro.listaPosicoesValidas(), j1, j2);
+
 				MotorDoJogo.limparPagina();
 				
 				while(MotorDoJogo.verificarSeJogadaPermitida(posicao)) {
