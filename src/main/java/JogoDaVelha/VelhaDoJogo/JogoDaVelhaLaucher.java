@@ -137,6 +137,10 @@ public class JogoDaVelhaLaucher {
 				respostaContinuar = sc.nextLine();
 			}
 				if(respostaContinuar.toLowerCase().trim().equals("n")) {
+					MotorDoJogo.limparPagina();
+					System.out.println("OBRIGADO POR JOGAR!!             ass: Wellington Brito");
+					Thread.sleep(2000);
+					
 					fimJogo = true;
 					MotorDoJogo.limparPagina();
 					
